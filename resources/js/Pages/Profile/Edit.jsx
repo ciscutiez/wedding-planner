@@ -1,39 +1,54 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+'use client'
 
-export default function Edit({ mustVerifyEmail, status }) {
-    return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
-            <Head title="Profile" />
+import { useState } from 'react'
+import { Head } from "@inertiajs/react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm"
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import DeleteUserForm from './Partials/DeleteUserForm'
+import UpdatePasswordForm from './Partials/UpdatePasswordForm'
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+export default function ProfilePage({ mustVerifyEmail, status }) {
+  const [activeTab, setActiveTab] = useState('account')
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
-                </div>
+  return (
+    <AuthenticatedLayout className="">
+      <Head title="Profile" />
+     
+      <Card>
+        <CardHeader>
+          <CardTitle>Manage Your Account</CardTitle>
+          <CardDescription>
+            Update your profile information, change your password, or delete your account.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="">
+            <TabsList className="">
+              <TabsTrigger value="account">Account</TabsTrigger>
+              <TabsTrigger value="password">Password</TabsTrigger>
+              <TabsTrigger value="delete">Delete Account</TabsTrigger>
+            </TabsList>
+            <div className="mt-6">
+              <TabsContent value="account">
+                <UpdateProfileInformationForm
+                  mustVerifyEmail={mustVerifyEmail}
+                  status={status}
+                />
+              </TabsContent>
+              <TabsContent value="password">
+                <UpdatePasswordForm />
+              </TabsContent>
+              <TabsContent value="delete">
+                <DeleteUserForm />
+              </TabsContent>
             </div>
-        </AuthenticatedLayout>
-    );
+          </Tabs>
+        </CardContent>
+      </Card>
+    </AuthenticatedLayout>
+  )
 }
+
