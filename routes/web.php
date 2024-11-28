@@ -4,6 +4,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CountdownController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
@@ -80,6 +81,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// Invitation routes 
 
+Route::get('/invitations', [InvitationController::class, 'index'])->name('invitations.index');
+Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+Route::get('/invite/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
 // Require auth routes (login, registration, etc.)
 require __DIR__ . '/auth.php';

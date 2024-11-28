@@ -19,10 +19,7 @@ export default function GuestLayout({ children }) {
                 </div>
             </div>
 
-            <footer className="mt-8 text-center text-sm text-gray-500">
-                © {new Date().getFullYear()} Designed and created by Ciscutiez.
-                All rights reserved.
-            </footer>
+         
         </div>
     );
 }
